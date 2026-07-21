@@ -31,7 +31,7 @@ function AuthLayout() {
   return (
     <div className="w-full max-w-md">
       <header className="flex items-center justify-between p-4 border-b border-neutral-200 dark:border-neutral-800">
-        <img src="/public/assignments.png" alt="Assignment Logo" className="w-8 h-8" />
+        <img src="/assignments.png" alt="Assignment Logo" className="w-8 h-8" />
         <span className="text-2xl font-bold">Assignment Tracker</span>
         <button onClick={() => void onSignOut()} disabled={pending} className={buttonClass}>
           {pending && <Spinner />}
