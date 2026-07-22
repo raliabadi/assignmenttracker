@@ -25,6 +25,7 @@ function Dashboard() {
   const [dueDate, setDueDate] = useState("");
   const [pending, setPending] = useState(false);
   const [editing, setEditing] = useState(false);
+  const [dirty, setDirty] = useState(false);
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
 
   async function onCreate(e: React.SubmitEvent) {
@@ -33,6 +34,7 @@ function Dashboard() {
     await createAssignment({ data: { title, dueDate } });
     setTitle("");
     setDueDate("");
+    setDirty(false);
     await router.invalidate();
     setPending(false);
   }
@@ -45,6 +47,7 @@ function Dashboard() {
     setDueDate("");
     setEditing(false);
     setSelectedItem(null);
+    setDirty(false);
     await router.invalidate();
     setPending(false);
   }
@@ -91,17 +94,17 @@ function Dashboard() {
           className={inputClass}
           placeholder="Title"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => { setTitle(e.target.value); setDirty(true); }}
           required
         />
         <input
           className={inputClass}
           type="datetime-local"
           value={dueDate}
-          onChange={(e) => setDueDate(e.target.value)}
+          onChange={(e) => { setDueDate(e.target.value); setDirty(true); }}
           required
         />
-        <button disabled={pending} className={buttonClass}>
+        <button disabled={pending || !dirty} className={buttonClass}>
           {pending && <Spinner />}
           {editing ? "Update Assignment" : "Add Assignment"}
         </button>
